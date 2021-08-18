@@ -81,7 +81,8 @@ class Pipeline(object):
     def __init__(self, name, delete_all_previous_data=False, keys=None, skip_transformation=False, benchmark=False):
         self.keys = keys or ['input', 'support', 'target']
         home = os.environ['HOME']
-        self.root = join(home, '.data', name)
+        data_output = os.environ['OUTPUT']
+        self.root = join(home, data_output, name)
         self.tfidf = TfidfVectorizer()
         self.skip_transformation = skip_transformation
         self.benchmark = benchmark

@@ -81,7 +81,8 @@ class Net(torch.nn.Module):
 def download_snli():
     '''Creates data and snli paths and downloads SNLI in the home dir'''
     home = os.environ['HOME']
-    data_dir = join(home, '.data')
+    data_output = os.environ['OUTPUT']
+    data_dir = join(home, data_output)
     snli_dir = join(data_dir, 'snli')
     snli_url = 'http://nlp.stanford.edu/projects/snli/snli_1.0.zip'
 

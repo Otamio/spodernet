@@ -85,7 +85,7 @@ def get_home_path():
     return os.environ['HOME']
 
 def get_data_path():
-    return join(os.environ['HOME'], '.data')
+    return join(os.environ['HOME'], os.environ['OUTPUT'])
 
 def make_dirs_if_not_exists(path):
     if not os.path.exists(path):

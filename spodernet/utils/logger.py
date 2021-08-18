@@ -14,8 +14,11 @@ import time
 def get_home_path():
     return os.environ['HOME']
 
+def get_output_path():
+    return os.environ['OUTPUT']
+
 def get_logger_path():
-    return join(get_home_path(), '.data', 'log_files')
+    return join(get_home_path(), get_output_path(), 'log_files')
 
 def make_dirs_if_not_exists(path):
     if not os.path.exists(path):

@@ -229,7 +229,8 @@ def test_path_creation():
         p = Pipeline(name)
 
     home = os.environ['HOME']
-    paths = [ join(home, '.data', name) for name in names]
+    data_output = os.environ['OUTPUT']
+    paths = [ join(home, data_output, name) for name in names]
     for path in paths:
         assert os.path.exists(path)
         os.rmdir(path)
