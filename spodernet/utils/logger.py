@@ -120,9 +120,9 @@ class Logger:
         if log_level >= Logger.GLOBAL_LOG_LEVEL:
             message = self.wrap_message(message, log_level, *args)
             if message.strip() != '':
-                print(message)
+                # print(message)
                 self.f.write(message + '\n')
                 if GlobalLogger.f_global_logger is None: GlobalLogger.init()
                 GlobalLogger.f_global_logger.write(message + '\n')
-
+                GlobalLogger.flush()
 
