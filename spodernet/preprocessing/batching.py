@@ -172,7 +172,11 @@ class DataLoaderSlave(threading.Thread):
             if self.randomize:
                 n = 0
                 while (n - self.stream_batcher.batch_size + 1) <= 0:
+                    # try:
                     shard_idx = self.rdm.choice(len(list(self.shard2batchidx.keys())), 1, p=self.shard_fractions)[0]
+                    # except:
+                        # import pdb
+                        # pdb.set_trace()
                     current_paths = self.paths[shard_idx]
 
                     self.load_files_if_needed(current_paths)
@@ -216,6 +220,8 @@ class StreamBatcher(object):
         if not exists(config_path):
             log.error('Path {0} does not exists! Have you forgotten to preprocess your dataset?', config_path)
         config = pickle.load(open(config_path, 'rb'))
+        # import pdb
+        # pdb.set_trace()
         self.paths = config['paths']
         self.fractions = config['fractions']
         self.num_batches = int(np.sum(config['counts']) / batch_size)
@@ -253,9 +259,12 @@ class StreamBatcher(object):
             self.subscribe_to_batch_prepared_event(DictConverter(keys))
         else:
             raise Exception('Backend has unsupported value {0}'.format(Config.backend))
-
+        
 
         batchidx2paths, batchidx2start_end, shard2batchidx = self.create_batchidx_maps(config['counts'])
+        
+        # import pdb
+        # pdb.set_trace()
 
         for i in range(loader_threads):
             seed = 2345 + (i*83)
@@ -321,6 +330,7 @@ class StreamBatcher(object):
         shard2batchidx = { 0 : []}
         paths = self.paths
         file_idx = 0
+        # import pdb
         for i in range(self.num_batches):
             start = i*self.batch_size
             end = (i+1)*self.batch_size
@@ -339,6 +349,8 @@ class StreamBatcher(object):
                 batchidx2start_end[i] = (start_big_batch, end_big_batch)
                 batchidx2paths[i] = paths[file_idx]
                 shard2batchidx[file_idx].append(i)
+            # if i == self.num_batches - 1:
+            #    pdb.set_trace()
 
         return batchidx2paths, batchidx2start_end, shard2batchidx
 

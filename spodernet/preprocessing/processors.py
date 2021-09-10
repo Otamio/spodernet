@@ -539,7 +539,6 @@ class StreamToHDF5(AbstractLoopLevelListOfTokensProcessor):
             if self.current_sample[inp_type] > 0:
                 self.save_to_hdf5(inp_type)
 
-
         if self.idx[inp_type] % 10000 == 0:
             if self.idx[inp_type] % 50000 == 0:
                 log.info('Processed {0} samples so far...', self.idx[inp_type])
